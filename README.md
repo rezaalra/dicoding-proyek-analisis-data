@@ -7,20 +7,25 @@ Proyek ini menganalisis dataset transaksi e-commerce untuk menjawab beberapa per
 - Bagaimana sebaran metode pembayaran yang digunakan?
 
 ## Tautan Penting
-Dashboard Streamlit: [Link Streamlit](https://zt692dma8czfhprcp9yrlz.streamlit.app/)
-Google Colab Notebook: [Link Colab](https://colab.research.google.com/drive/14RFjeLylrd32jCtFmFEXUB_0bnCHVicn?usp=sharing)
-Repository GitHub: [GitHub Repo](https://github.com/rezaalra/dicoding-proyek-analisis-data/)
+- Dashboard Streamlit: [Link Streamlit](https://zt692dma8czfhprcp9yrlz.streamlit.app/)
+- Google Colab Notebook: [Link Colab](https://colab.research.google.com/drive/14RFjeLylrd32jCtFmFEXUB_0bnCHVicn?usp=sharing)
+- Repository GitHub: [GitHub Repo](https://github.com/rezaalra/dicoding-proyek-analisis-data/)
 
-Setup Environment - Anaconda
+## Setup Environment - Anaconda
+```bash
 conda create --name main-ds python=3.9
 conda activate main-ds
 pip install -r requirements.txt
-Setup Environment - Shell/Terminal
+```
+
+## Setup Environment - Shell/Terminal
+```bash
 mkdir proyek_analisis_data
 cd proyek_analisis_data
 pipenv install
 pipenv shell
 pip install -r requirements.txt
+```
 
 ## Run steamlit app
 ```bash
