@@ -32,19 +32,33 @@ df_payment_methods = pd.DataFrame({
     "Usage": [76795, 19784, 5775, 1529, 3]
 })
 
-# Visualisasi Penjualan Berdasarkan Kategori Produk
+# Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
 st.header("Best Selling Products")
 fig1, ax1 = plt.subplots(figsize=(8, 4))
 colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
 sns.barplot(
     data=df_category_sales,
-    x="Category",
-    y="Sales",
+    x="Sales",
+    y="Category",
     ax=ax1,
     palette=colors)
-ax1.set_xlabel("Category")
-ax1.set_ylabel("Sales")
+ax1.set_xlabel("Sales")
+ax1.set_ylabel("Category")
 st.pyplot(fig1)
+
+# Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
+st.header("Worst Selling Products")
+fig2, ax2 = plt.subplots(figsize=(8, 4))
+colors = ["#F90611"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
+sns.barplot(
+    data=df_category_sales,
+    x="Sales",
+    y="Category",
+    ax=ax2,
+    palette=colors)
+ax2.set_xlabel("Sales")
+ax2.set_ylabel("Category")
+st.pyplot(fig2)
 
 # Visualisasi Penjualan Berdasarkan Wilayah Kota Customer
 st.header("Number of Orders by City")
@@ -52,24 +66,38 @@ fig3, ax3 = plt.subplots(figsize=(8, 4))
 colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1)
 sns.barplot(
     data=df_city_sales,
-    x="City",
-    y="Sales",
+    x="Sales",
+    y="City",
     ax=ax3,
     palette=colors)
-ax3.set_xlabel("City")
-ax3.set_ylabel("Sales")
+ax3.set_xlabel("Sales")
+ax3.set_ylabel("City")
 st.pyplot(fig3)
+
+# Visualisasi Penjualan Berdasarkan Wilayah State Customer
+st.header("Number of Orders by State")
+fig4, ax4 = plt.subplots(figsize=(8, 4))
+colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1)
+sns.barplot(
+    data=df_city_sales,
+    x="Sales",
+    y="City",
+    ax=ax4,
+    palette=colors)
+ax4.set_xlabel("Sales")
+ax4.set_ylabel("City")
+st.pyplot(fig4)
 
 # Visualisasi Sebaran Metode Pembayaran
 st.header("Number of Customers by Payment Method")
-fig4, ax4 = plt.subplots(figsize=(8, 4))
+fig5, ax5 = plt.subplots(figsize=(8, 4))
 colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1)
 sns.barplot(
     data=df_payment_methods,
     x="Usage",
     y="Method",
-    ax=ax4,
+    ax=ax5,
     palette=colors)
-ax4.set_xlabel("Usage")
-ax4.set_ylabel("Method")
-st.pyplot(fig4)
+ax5.set_xlabel("Usage")
+ax5.set_ylabel("Method")
+st.pyplot(fig5)
