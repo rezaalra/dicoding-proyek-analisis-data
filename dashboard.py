@@ -4,9 +4,116 @@ import seaborn as sns
 import streamlit as st
 
 # Impor semua data yang dibutuhkan dari Google Drive
-customers_df = pd.read_csv('https://drive.google.com/uc?id=1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB')
+customers_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB')
+order_items_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1X073WBKxBWYRx6T8RSyaNipsOm7M3ByQ')
+order_payments_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1_RufBMRx7u4pJlE7Gd7k1o9RYHHomroA')
+orders_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1-MeRdV6SnI0zeleJcixJlEO2u32Ijosu')
+products_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1VNLJjV35XYRs34DyGfHGa0KEvLIPtzSn')
+product_category_name_translation_df = pd.read_csv(
+    'https://drive.google.com/uc?id=1DMKWG56iinPGHGC2PUHSoiXSYSX5w0Pn')
 
-# Placeholder: Simulasi data berdasarkan insight yang ada
+# Cleaning Data
+# Membersihkan tabel order_items_df
+order_items_df['shipping_limit_date'] = pd.to_datetime(order_items_df['shipping_limit_date'])
+
+# Membersihkan tabel orders_df
+datetime_columns = ["order_purchase_timestamp",
+                    "order_approved_at",
+                    "order_delivered_carrier_date",
+                    "order_delivered_customer_date",
+                    "order_estimated_delivery_date"]
+for column in datetime_columns:
+  orders_df[column] = pd.to_datetime(orders_df[column])
+
+# Membersihkan tabel products_df
+products_df = pd.merge(products_df,
+                       product_category_name_translation_df,
+                       left_on='product_category_name',
+                       right_on='product_category_name',
+                       how='left')
+products_df['product_category_name'] = (
+  products_df['product_category_name_english']
+  if products_df['product_category_name_english'] is not None
+  else products_df['product_category_name'])
+products_df.drop(columns=['product_category_name_english'], inplace=True)
+
+fillna_0_columns = ['product_name_lenght',
+                    'product_description_lenght',
+                    'product_photos_qty',
+                    'product_weight_g',
+                    'product_length_cm',
+                    'product_height_cm',
+                    'product_width_cm']
+for column in fillna_0_columns:
+  products_df[column] = products_df[column].fillna(0)
+
+integer_columns = ['product_name_lenght',
+                   'product_description_lenght',
+                   'product_photos_qty']
+
+products_df = products_df.astype(
+    {column:'int' for column in integer_columns})
+
+# Exploratory Data Analysis (EDA)
+# Explore kategori produk berdasarkan jumlah penjualan yang telah terjadi
+order_products_df = pd.merge(order_items_df,
+                             products_df,
+                             left_on='product_id',
+                             right_on='product_id',
+                             how='inner')
+product_order_counts = order_products_df.groupby(
+    by="product_category_name").order_id.count()
+product_order_counts.rename("order_count", inplace=True)
+product_order_counts = product_order_counts.sort_values(ascending=False)
+
+# Explore jumlah penjualan yang telah terjadi berdasarkan wilayahnya
+customer_order_items_df = pd.merge(customers_df,
+                                   orders_df,
+                                   left_on='customer_id',
+                                   right_on='customer_id',
+                                   how='inner')
+customer_order_items_df = pd.merge(customer_order_items_df,
+                                   order_items_df,
+                                   left_on='order_id',
+                                   right_on='order_id',
+                                   how='inner')
+
+order_items_by_city = customer_order_items_df.groupby(
+    by="customer_city").order_item_id.count().sort_values(ascending=False)
+order_items_by_city.rename("order_count", inplace=True)
+
+order_items_by_state = customer_order_items_df.groupby(
+    by="customer_state").order_item_id.count().sort_values(ascending=False)
+order_items_by_state.rename("order_count", inplace=True)
+
+# Explore sebaran metode pembayaran yang digunakan dalam data transaksi customer
+payment_type_counts = order_payments_df.groupby(
+    by="payment_type").order_id.count()
+payment_type_counts.rename("order_count", inplace=True)
+payment_type_counts = payment_type_counts.sort_values(ascending=False)
+
+payment_installment_counts = order_payments_df.groupby(
+    ["payment_type", 'payment_installments']).order_id.count()
+payment_installment_counts.rename("order_count", inplace=True)
+
+order_payments_df['payment_installments'] = \
+  order_payments_df['payment_installments'].replace(0, 1)
+
+payment_type_counts = order_payments_df.groupby(
+    by="payment_type").order_id.count()
+payment_type_counts.rename("order_count", inplace=True)
+payment_type_counts = payment_type_counts.sort_values(ascending=False)
+payment_installment_counts = order_payments_df.groupby(
+    ["payment_type", 'payment_installments']).order_id.count()
+payment_installment_counts.rename("order_count", inplace=True)
+
+
+
 # Data penjualan terbaik berdasarkan kategori
 best_selling_products = pd.DataFrame({
     "Category": ['bed_bath_table', 'health_beauty', 'sports_leisure',
