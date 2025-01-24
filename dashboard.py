@@ -9,10 +9,9 @@ st.set_page_config(
     page_icon=":bar_chart",
     layout="wide")
 st.title(":bar_chart: Dashboard E-commerce by Reza")
-st.markdown("""
-    **Nama:** Muhamad Reza Al Ramadhan
-    **Email:** rezaalramadhan@gmail.com
-    **ID Dicoding:** https://www.dicoding.com/users/reza_al_ramadhan/""")
+st.subheader("Muhamad Reza Al Ramadhan")
+st.subheader("rezaalramadhan@gmail.com")
+st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
 
 # Placeholder: Simulasi data berdasarkan insight yang ada
 # Data penjualan berdasarkan kategori
