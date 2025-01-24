@@ -32,7 +32,7 @@ df_payment_methods = pd.DataFrame({
     "Usage": [76795, 19784, 5775, 1529, 3]
 })
 
-def plot_bar_chart(data, x_col, y_col, title, x_label, y_label, colors, figsize):
+def plot_bar_chart(data, x_col, y_col, title, x_label, y_label, palette, figsize):
     """
     Fungsi untuk membuat bar chart menggunakan Seaborn.
     
@@ -47,7 +47,7 @@ def plot_bar_chart(data, x_col, y_col, title, x_label, y_label, colors, figsize)
         figsize (tuple): Ukuran figure (lebar, tinggi).
     """
     fig, ax = plt.subplots(figsize=figsize)
-    sns.barplot(data=data, x=x_col, y=y_col, ax=ax, color=colors)
+    sns.barplot(data=data, x=x_col, y=y_col, ax=ax, palette=palette)
     ax.set_title(title)
     ax.set_xlabel(x_label)
     ax.set_ylabel(y_label)
@@ -62,7 +62,7 @@ plot_bar_chart(
     title="Penjualan per Kategori",
     x_label="Kategori Produk",
     y_label="Jumlah Penjualan",
-    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1),
+    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1),
     figsize=(8, 5)
 )
 
@@ -75,7 +75,7 @@ plot_bar_chart(
     title="Penjualan per Wilayah",
     x_label="Wilayah (Kota)",
     y_label="Jumlah Penjualan",
-    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1),
+    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1),
     figsize=(8, 5)
 )
 
@@ -88,7 +88,7 @@ plot_bar_chart(
     title="Penggunaan Metode Pembayaran",
     x_label="Metode Pembayaran",
     y_label="Persentase Penggunaan",
-    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1),
+    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1),
     figsize=(8, 5)
 )
 
