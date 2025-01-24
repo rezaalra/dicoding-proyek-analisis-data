@@ -63,7 +63,7 @@ plot_bar_chart(
     x_label="Kategori Produk",
     y_label="Jumlah Penjualan",
     palette=["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1),
-    figsize=(8, 5)
+    figsize=(8, 4)
 )
 
 # Visualisasi Penjualan Berdasarkan Wilayah Customer
@@ -76,7 +76,7 @@ plot_bar_chart(
     x_label="Wilayah (Kota)",
     y_label="Jumlah Penjualan",
     palette=["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1),
-    figsize=(8, 5)
+    figsize=(8, 4)
 )
 
 # Visualisasi Penjualan Berdasarkan Metode Pembayaran
@@ -89,9 +89,30 @@ plot_bar_chart(
     x_label="Metode Pembayaran",
     y_label="Persentase Penggunaan",
     palette=["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1),
-    figsize=(8, 5)
+    figsize=(8, 4)
 )
 
 # Visualisasi Sebaran Metode Pembayaran
-#colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1)
-#fig4, ax3 = plt.subplots()
+st.header("Number of Customers by Payment Method")
+colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1)
+plt.figure(figsize=(8, 4))
+sns.barplot(data=df_payment_methods,
+            x="Usage",
+            y="Method",
+            palette=colors)
+plt.title("Number of Customers by Payment Method", loc="center", fontsize=16)
+plt.ylabel(None)
+plt.xlabel(None)
+plt.tick_params(axis='both', labelsize=12)
+plt.show()
+
+fig4, ax4 = plt.subplots(figsize=(8, 4))
+sns.barplot(
+    data=df_payment_methods,
+    x="Usage",
+    y="Method",
+    ax=ax4,
+    palette=colors)
+ax.set_xlabel("Usage")
+ax.set_ylabel("Method")
+st.pyplot(fig4)
