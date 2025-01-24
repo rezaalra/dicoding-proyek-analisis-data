@@ -1,14 +1,10 @@
-import gdown
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
-# Download semua data yang dibutuhkan dari Google Drive
-! gdown 1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB
-
 # Impor semua data yang dibutuhkan dari Google Drive
-customers_df = pd.read_csv('customers_dataset.csv')
+customers_df = pd.read_csv('https://drive.google.com/uc?id=1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB')
 
 # Placeholder: Simulasi data berdasarkan insight yang ada
 # Data penjualan berdasarkan kategori
