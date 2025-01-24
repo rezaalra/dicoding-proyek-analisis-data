@@ -4,15 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
-st.set_page_config(
-    page_title="Dashboard E-commerce by Reza",
-    page_icon=":bar_chart",
-    layout="wide")
-st.title(":bar_chart: Dashboard E-commerce by Reza")
-st.subheader("Nama: Muhamad Reza Al Ramadhan")
-st.subheader("Email: rezaalramadhan@gmail.com")
-st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
-
 # Placeholder: Simulasi data berdasarkan insight yang ada
 # Data penjualan berdasarkan kategori
 df_category_sales = pd.DataFrame({
@@ -32,6 +23,15 @@ df_payment_methods = pd.DataFrame({
     "Usage": [76795, 19784, 5775, 1529, 3]
 })
 
+st.set_page_config(
+    page_title="Dashboard E-commerce by Reza",
+    page_icon=":bar_chart",
+    layout="wide")
+st.title(":bar_chart: Dashboard E-commerce by Reza")
+st.subheader("Nama: Muhamad Reza Al Ramadhan")
+st.subheader("Email: rezaalramadhan@gmail.com")
+st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
+
 # Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
 st.header("Best Selling Products")
 fig1, ax1 = plt.subplots(figsize=(8, 4))
@@ -46,7 +46,7 @@ ax1.set_xlabel("Sales")
 ax1.set_ylabel("Category")
 st.pyplot(fig1)
 
-# Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
+# Visualisasi Penjualan terburuk Berdasarkan Kategori Produk
 st.header("Worst Selling Products")
 fig2, ax2 = plt.subplots(figsize=(8, 4))
 colors = ["#F90611"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
@@ -58,6 +58,9 @@ sns.barplot(
     palette=colors)
 ax2.set_xlabel("Sales")
 ax2.set_ylabel("Category")
+ax2.invert_xaxis()
+ax2.yaxis.set_label_position("right")
+ax2.yaxis.tick_right()
 st.pyplot(fig2)
 
 # Visualisasi Penjualan Berdasarkan Wilayah Kota Customer
