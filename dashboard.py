@@ -13,7 +13,7 @@ st.subheader("Muhamad Reza Al Ramadhan, rezaalramadhan@gmail.com")
 st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
 
 # Dashboard penjualan berdasarkan metode pembayaran
-payment_type_counts = pd.pd.DataFrame({
+payment_type_counts = pd.DataFrame({
     "Method": ["credit_card", "boleto", "voucher", "debit_card", "not_defined"],
     "Usage": [76795, 19784, 5775, 1529, 3]
 })
