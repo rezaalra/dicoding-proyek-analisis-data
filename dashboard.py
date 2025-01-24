@@ -123,7 +123,7 @@ st.header("Number of Customers by Number of Installments")
 fig6, ax6 = plt.subplots(figsize=(8, 4))
 plt.plot([1, 2, 3, 4, 5, 6],
          [25457, 12413, 10461, 7098, 5239, 3920])
-plt.xticks(payment_installment_credit_card_plot["payment_installments"])
+plt.xticks([1, 2, 3, 4, 5, 6])
 plt.xlabel("Number of Installments")
 plt.ylabel("Number of Customers")
 st.pyplot(fig6)
