@@ -7,10 +7,21 @@ import streamlit as st
 customers_df = pd.read_csv('https://drive.google.com/uc?id=1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB')
 
 # Placeholder: Simulasi data berdasarkan insight yang ada
-# Data penjualan berdasarkan kategori
-df_category_sales = pd.DataFrame({
-    "Category": ["bed bath table", "security and services", "furniture", "electronics"],
-    "Sales": [2000, 500, 1500, 1200]
+# Data penjualan terbaik berdasarkan kategori
+best_selling_products = pd.DataFrame({
+    "Category": ['bed_bath_table', 'health_beauty', 'sports_leisure',
+    'furniture_decor', 'computers_accessories', 'housewares', 'watches_gifts',
+    'telephony', 'garden_tools', 'auto'],
+    "Sales": [11115, 9670, 8641, 8334, 7827, 6964, 5991, 4545, 4347, 4235]
+})
+
+# Data penjualan terburuk berdasarkan kategori
+worst_selling_products = pd.DataFrame({
+    "Category": ['security_and_services', 'fashion_childrens_clothes',
+    'cds_dvds_musicals', 'la_cuisine', 'arts_and_craftmanship',
+    'home_comfort_2', 'fashion_sport', 'flowers', 'music',
+    'furniture_mattress_and_upholstery'],
+    "Sales": [2, 8, 14, 14, 24, 30, 30, 33, 38, 38]
 })
 
 # Data penjualan berdasarkan wilayah (kota)
@@ -37,9 +48,9 @@ st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
 # Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
 st.header("Best Selling Products")
 fig1, ax1 = plt.subplots(figsize=(8, 4))
-colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
+colors = ["#00FF57"] + ["#D3D3D3"] * (len(best_selling_products) - 1)
 sns.barplot(
-    data=df_category_sales,
+    data=best_selling_products,
     x="Sales",
     y="Category",
     ax=ax1,
@@ -51,9 +62,9 @@ st.pyplot(fig1)
 # Visualisasi Penjualan terburuk Berdasarkan Kategori Produk
 st.header("Worst Selling Products")
 fig2, ax2 = plt.subplots(figsize=(8, 4))
-colors = ["#F90611"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
+colors = ["#F90611"] + ["#D3D3D3"] * (len(worst_selling_products) - 1)
 sns.barplot(
-    data=df_category_sales,
+    data=worst_selling_products,
     x="Sales",
     y="Category",
     ax=ax2,
