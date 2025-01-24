@@ -83,8 +83,8 @@ plot_bar_chart(
 st.header("Penjualan Berdasarkan Metode Pembayaran")
 plot_bar_chart(
     data=df_payment_methods,
-    x_col="Method",
-    y_col="Usage",
+    x_col="Usage",
+    y_col="Method",
     title="Penggunaan Metode Pembayaran",
     x_label="Metode Pembayaran",
     y_label="Persentase Penggunaan",
