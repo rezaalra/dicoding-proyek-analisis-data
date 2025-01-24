@@ -62,7 +62,7 @@ plot_bar_chart(
     title="Penjualan per Kategori",
     x_label="Kategori Produk",
     y_label="Jumlah Penjualan",
-    colors="skyblue",
+    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1),
     figsize=(8, 5)
 )
 
@@ -75,7 +75,7 @@ plot_bar_chart(
     title="Penjualan per Wilayah",
     x_label="Wilayah (Kota)",
     y_label="Jumlah Penjualan",
-    colors="green",
+    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1),
     figsize=(8, 5)
 )
 
@@ -88,7 +88,7 @@ plot_bar_chart(
     title="Penggunaan Metode Pembayaran",
     x_label="Metode Pembayaran",
     y_label="Persentase Penggunaan",
-    colors="orange",
+    colors=["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1),
     figsize=(8, 5)
 )
 
