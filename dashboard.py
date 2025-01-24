@@ -93,26 +93,14 @@ plot_bar_chart(
 )
 
 # Visualisasi Sebaran Metode Pembayaran
-st.header("Number of Customers by Payment Method")
+st.header("Number of Customers by Payment Method")fig4, ax4 = plt.subplots(figsize=(8, 4))
 colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1)
-plt.figure(figsize=(8, 4))
-sns.barplot(data=df_payment_methods,
-            x="Usage",
-            y="Method",
-            palette=colors)
-plt.title("Number of Customers by Payment Method", loc="center", fontsize=16)
-plt.ylabel(None)
-plt.xlabel(None)
-plt.tick_params(axis='both', labelsize=12)
-plt.show()
-
-fig4, ax4 = plt.subplots(figsize=(8, 4))
 sns.barplot(
     data=df_payment_methods,
     x="Usage",
     y="Method",
     ax=ax4,
     palette=colors)
-ax.set_xlabel("Usage")
-ax.set_ylabel("Method")
+ax4.set_xlabel("Usage")
+ax4.set_ylabel("Method")
 st.pyplot(fig4)
