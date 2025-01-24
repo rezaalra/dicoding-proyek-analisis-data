@@ -1,0 +1,3 @@
+Link Streamlit: https://jnadrvy8ngpsigknmzwdq2.streamlit.app/
+Link Google Colab: https://colab.research.google.com/drive/14RFjeLylrd32jCtFmFEXUB_0bnCHVicn?usp=sharing
+Link Github: https://github.com/rezaalra/dicoding-proyek-analisis-data/
