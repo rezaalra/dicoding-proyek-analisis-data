@@ -11,11 +11,11 @@ Proyek ini menganalisis dataset transaksi e-commerce untuk menjawab beberapa per
 2. Instal semua library yang diperlukan:
    ```bash
    pip install -r requirements.txt
-
-## Jalankan dashboard dengan Streamlit:
-streamlit run dashboard/dashboard.py
+3. Jalankan dashboard dengan Streamlit:
+   ```bash
+   streamlit run dashboard/dashboard.py
 
 ## Tautan Penting
-Dashboard Streamlit: Link Streamlit
-Google Colab Notebook: Link Colab
-Repository GitHub: GitHub Repo
+Dashboard Streamlit: [Link Streamlit](https://zt692dma8czfhprcp9yrlz.streamlit.app/)
+Google Colab Notebook: [Link Colab](https://colab.research.google.com/drive/14RFjeLylrd32jCtFmFEXUB_0bnCHVicn?usp=sharing)
+Repository GitHub: [GitHub Repo](https://github.com/rezaalra/dicoding-proyek-analisis-data/)
