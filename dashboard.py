@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
+# Download semua data yang dibutuhkan dari Google Drive
+! gdown 1bkyvjGOuLX1JnqNil8NpTUQGDxJ5kzyB
+
+# Impor semua data yang dibutuhkan dari Google Drive
+customers_df = pd.read_csv('customers_dataset.csv')
+
 # Placeholder: Simulasi data berdasarkan insight yang ada
 # Data penjualan berdasarkan kategori
 df_category_sales = pd.DataFrame({
