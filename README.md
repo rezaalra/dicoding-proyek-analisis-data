@@ -13,15 +13,15 @@ Proyek ini menganalisis dataset transaksi e-commerce untuk menjawab beberapa per
 
 ## Setup Environment - Anaconda
 ```bash
-conda create --name main-ds python=3.9
-conda activate main-ds
+conda create --name ecom-project python=3.11
+conda activate ecom-project
 pip install -r requirements.txt
 ```
 
 ## Setup Environment - Shell/Terminal
 ```bash
-mkdir proyek_analisis_data
-cd proyek_analisis_data
+mkdir ecom_project
+cd ecom_project
 pipenv install
 pipenv shell
 pip install -r requirements.txt
