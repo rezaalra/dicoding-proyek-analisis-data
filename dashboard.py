@@ -32,65 +32,33 @@ df_payment_methods = pd.DataFrame({
     "Usage": [76795, 19784, 5775, 1529, 3]
 })
 
-def plot_bar_chart(data, x_col, y_col, title, x_label, y_label, palette, figsize):
-    """
-    Fungsi untuk membuat bar chart menggunakan Seaborn.
-    
-    Parameters:
-        data (DataFrame): Data untuk visualisasi.
-        x_col (str): Kolom untuk sumbu x.
-        y_col (str): Kolom untuk sumbu y.
-        title (str): Judul grafik.
-        x_label (str): Label untuk sumbu x.
-        y_label (str): Label untuk sumbu y.
-        colors (str): Warna bar chart.
-        figsize (tuple): Ukuran figure (lebar, tinggi).
-    """
-    fig, ax = plt.subplots(figsize=figsize)
-    sns.barplot(data=data, x=x_col, y=y_col, ax=ax, palette=palette)
-    ax.set_title(title)
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-    st.pyplot(fig)
-
 # Visualisasi Penjualan Berdasarkan Kategori Produk
-st.header("Penjualan Berdasarkan Kategori Produk")
-plot_bar_chart(
+st.header("Best Selling Products")
+fig1, ax1 = plt.subplots(figsize=(8, 4))
+colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1)
+sns.barplot(
     data=df_category_sales,
-    x_col="Category",
-    y_col="Sales",
-    title="Penjualan per Kategori",
-    x_label="Kategori Produk",
-    y_label="Jumlah Penjualan",
-    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_category_sales) - 1),
-    figsize=(8, 4)
-)
+    x="Category",
+    y="Sales",
+    ax=ax1,
+    palette=colors)
+ax1.set_xlabel("Category")
+ax1.set_ylabel("Sales")
+st.pyplot(fig1)
 
-# Visualisasi Penjualan Berdasarkan Wilayah Customer
-st.header("Penjualan Berdasarkan Wilayah Customer")
-plot_bar_chart(
+# Visualisasi Penjualan Berdasarkan Wilayah Kota Customer
+st.header("Number of Orders by City")
+fig3, ax3 = plt.subplots(figsize=(8, 4))
+colors = ["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1)
+sns.barplot(
     data=df_city_sales,
-    x_col="City",
-    y_col="Sales",
-    title="Penjualan per Wilayah",
-    x_label="Wilayah (Kota)",
-    y_label="Jumlah Penjualan",
-    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_city_sales) - 1),
-    figsize=(8, 4)
-)
-
-# Visualisasi Penjualan Berdasarkan Metode Pembayaran
-st.header("Penjualan Berdasarkan Metode Pembayaran")
-plot_bar_chart(
-    data=df_payment_methods,
-    x_col="Usage",
-    y_col="Method",
-    title="Penggunaan Metode Pembayaran",
-    x_label="Metode Pembayaran",
-    y_label="Persentase Penggunaan",
-    palette=["#00FF57"] + ["#D3D3D3"] * (len(df_payment_methods) - 1),
-    figsize=(8, 4)
-)
+    x="City",
+    y="Sales",
+    ax=ax3,
+    palette=colors)
+ax3.set_xlabel("City")
+ax3.set_ylabel("Sales")
+st.pyplot(fig3)
 
 # Visualisasi Sebaran Metode Pembayaran
 st.header("Number of Customers by Payment Method")
