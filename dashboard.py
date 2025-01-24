@@ -21,8 +21,8 @@ payment_type_counts = pd.DataFrame({
 plt.figure(figsize=(12, 6))
 colors= ["#00FF57"] + ["#D3D3D3"] * (len(payment_type_counts) - 1)
 sns.barplot(data=payment_type_counts,
-            x="order_count",
-            y="payment_type",
+            x="Usage",
+            y="Method",
             palette=colors)
 plt.ylabel(None)
 plt.xlabel(None)
