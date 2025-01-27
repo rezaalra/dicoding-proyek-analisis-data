@@ -80,9 +80,12 @@ customer_order_items_df = pd.merge(customer_order_items_df,
                                    right_on='order_id',
                                    how='inner')
 
-def product_order_counts_pivot():
-    product_order_counts = order_products_df.groupby(
-        by="product_category_name").order_id.count()
+def product_order_counts_pivot(start_date, end_date):
+    product_order_counts = order_products_df[
+        (order_products_df.order_purchase_timestamp >= start_date) &
+        (order_products_df.order_purchase_timestamp <= end_date)]
+    product_order_counts = product_order_counts.groupby(
+        by="product_category_name").order_id.count().sort_values(ascending=False)
     product_order_counts.rename("order_count", inplace=True)
     return product_order_counts
 
@@ -214,12 +217,12 @@ earliest_date = orders_df.order_purchase_timestamp.min()
 last_date  = orders_df.order_purchase_timestamp.max()
 start_date = st.date_input(
     label="Start Date", 
-    value=None,
+    value=earliest_date,
     min_value=earliest_date,
     max_value=last_date)
 end_date = st.date_input(
     label="End Date",
-    value=None,
+    value=last_date,
     min_value=earliest_date,
     max_value=last_date)
 
@@ -249,7 +252,7 @@ if st.button("Apply"):
     # Visualisasi semua data
     show_best_selling_products(best_selling_products)
     show_worst_selling_products(worst_selling_products)
-    show_city_sales(state_city_df)
+    show_city_sales(city_sales_df)
     show_state_sales(state_sales_df)
     show_payment_methods(payment_methods_df)
     show_payment_installment_methods(payment_installment_credit_card_plot)
