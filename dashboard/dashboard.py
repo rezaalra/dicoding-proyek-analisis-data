@@ -68,22 +68,22 @@ all_data_df = pd.merge(customers_df,
                        orders_df,
                        left_on='customer_id',
                        right_on='customer_id',
-                       how='left')
+                       how='inner')
 all_data_df = pd.merge(all_data_df,
                        order_items_df,
                        left_on='order_id',
                        right_on='order_id',
-                       how='left')
+                       how='inner')
 all_data_df = pd.merge(all_data_df,
                        order_payments_df,
                        left_on='order_id',
                        right_on='order_id',
-                       how='left')
+                       how='inner')
 all_data_df = pd.merge(all_data_df,
                        products_df,
                        left_on='product_id',
                        right_on='product_id',
-                       how='left')
+                       how='inner')
 
 def product_order_counts_pivot(start_date, end_date):
     product_order_counts = all_data_df[
