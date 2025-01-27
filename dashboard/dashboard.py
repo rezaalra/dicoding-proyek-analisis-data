@@ -64,7 +64,12 @@ order_payments_df['payment_installments'] = \
   order_payments_df['payment_installments'].replace(0, 1)
 
 # Join semua data yang perlukan
-order_products_df = pd.merge(order_items_df,
+order_products_df = pd.merge(orders_df,
+                             order_items_df,
+                             left_on='order_id',
+                             right_on='order_id',
+                             how='inner')
+order_products_df = pd.merge(order_products_df,
                              products_df,
                              left_on='product_id',
                              right_on='product_id',
@@ -213,6 +218,7 @@ st.subheader("Email: rezaalramadhan@gmail.com")
 st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
 
 # Date Filter
+st.subheader("Filter:")
 earliest_date = orders_df.order_purchase_timestamp.min()
 last_date  = orders_df.order_purchase_timestamp.max()
 start_date = st.date_input(
