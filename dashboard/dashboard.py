@@ -270,9 +270,6 @@ end_date = st.date_input(
     min_value=earliest_date,
     max_value=last_date)
 
-# Tampilkan data yang telah dijoin
-st.dataframe(all_data_df)
-
 # Data penjualan berdasarkan kategori
 product_order_counts = product_order_counts_pivot(
     pd.to_datetime(start_date), pd.to_datetime(end_date))
