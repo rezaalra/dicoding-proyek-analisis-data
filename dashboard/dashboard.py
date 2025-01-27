@@ -98,7 +98,7 @@ def order_items_by_state_pivot():
     order_items_by_state.rename("order_count", inplace=True)
     return order_items_by_state
 
-def payment_type_counts_pivot()
+def payment_type_counts_pivot():
     payment_type_counts = order_payments_df.groupby(
         by="payment_type").order_id.count().sort_values(ascending=False)
     payment_type_counts.rename("order_count", inplace=True)
@@ -159,7 +159,7 @@ def show_city_sales(city_sales_df):
     st.pyplot(fig3)
 
 # Visualisasi Penjualan Berdasarkan Wilayah State Customer
-def show_city_sales(state_sales_df):
+def show_state_sales(state_sales_df):
     st.header("Number of Orders by State")
     fig4, ax4 = plt.subplots(figsize=(8, 4))
     colors = ["#00FF57"] + ["#D3D3D3"] * (len(state_sales_df) - 1)
@@ -189,7 +189,7 @@ def show_payment_methods(payment_methods_df):
     st.pyplot(fig5)
 
 # Visualisasi Sebaran Metode Pembayaran
-def show_payment_methods(payment_installment_credit_card_plot):
+def show_payment_installment_methods(payment_installment_credit_card_plot):
     st.header("Number of Customers by Number of Installments")
     fig6, ax6 = plt.subplots(figsize=(8, 4))
     plt.plot(payment_installment_credit_card_plot["payment_installments"],
@@ -249,3 +249,7 @@ if st.button("Apply"):
     # Visualisasi semua data
     show_best_selling_products(best_selling_products)
     show_worst_selling_products(worst_selling_products)
+    show_city_sales(state_city_df)
+    show_state_sales(state_sales_df)
+    show_payment_methods(payment_methods_df)
+    show_payment_installment_methods(payment_installment_credit_card_plot)
