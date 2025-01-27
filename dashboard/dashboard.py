@@ -140,8 +140,12 @@ def payment_installment_counts_pivot(start_date, end_date):
 # Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
 def show_best_selling_products(best_selling_products):
     st.header("Best Selling Products")
+    data_length = len(worst_selling_products)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig1, ax1 = plt.subplots(figsize=(8, 4))
-    colors = ["#00FF57"] + ["#D3D3D3"] * ( - 1)
+    colors = ["#00FF57"] + ["#D3D3D3"] * (data_length - 1)
     sns.barplot(
         data=best_selling_products,
         x="order_count",
@@ -155,8 +159,12 @@ def show_best_selling_products(best_selling_products):
 # Visualisasi Penjualan terburuk Berdasarkan Kategori Produk
 def show_worst_selling_products(worst_selling_products):
     st.header("Worst Selling Products")
+    data_length = len(worst_selling_products)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig2, ax2 = plt.subplots(figsize=(8, 4))
-    colors = ["#F90611"] + ["#D3D3D3"] * (len(worst_selling_products) - 1)
+    colors = ["#F90611"] + ["#D3D3D3"] * (data_length - 1)
     sns.barplot(
         data=worst_selling_products,
         x="order_count",
@@ -173,8 +181,12 @@ def show_worst_selling_products(worst_selling_products):
 # Visualisasi Penjualan Berdasarkan Wilayah Kota Customer
 def show_city_sales(city_sales_df):
     st.header("Number of Orders by City")
+    data_length = len(city_sales_df)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig3, ax3 = plt.subplots(figsize=(8, 4))
-    colors = ["#00FF57"] + ["#D3D3D3"] * (len(city_sales_df) - 1)
+    colors = ["#00FF57"] + ["#D3D3D3"] * (data_length - 1)
     sns.barplot(
         data=city_sales_df,
         x="order_count",
@@ -188,8 +200,12 @@ def show_city_sales(city_sales_df):
 # Visualisasi Penjualan Berdasarkan Wilayah State Customer
 def show_state_sales(state_sales_df):
     st.header("Number of Orders by State")
+    data_length = len(state_sales_df)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig4, ax4 = plt.subplots(figsize=(8, 4))
-    colors = ["#00FF57"] + ["#D3D3D3"] * (len(state_sales_df) - 1)
+    colors = ["#00FF57"] + ["#D3D3D3"] * (data_length - 1)
     sns.barplot(
         data=state_sales_df,
         x="order_count",
@@ -203,8 +219,12 @@ def show_state_sales(state_sales_df):
 # Visualisasi Sebaran Metode Pembayaran
 def show_payment_methods(payment_methods_df):
     st.header("Number of Customers by Payment Method")
+    data_length = len(payment_methods_df)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig5, ax5 = plt.subplots(figsize=(8, 4))
-    colors = ["#00FF57"] + ["#D3D3D3"] * (len(payment_methods_df) - 1)
+    colors = ["#00FF57"] + ["#D3D3D3"] * (data_length - 1)
     sns.barplot(
         data=payment_methods_df,
         x="order_count",
@@ -255,37 +275,36 @@ end_date = st.date_input(
     min_value=earliest_date,
     max_value=last_date)
 
-if st.button("Apply"):
-    # Data penjualan berdasarkan kategori
-    product_order_counts = product_order_counts_pivot(
-        pd.to_datetime(start_date), pd.to_datetime(end_date))
+# Data penjualan berdasarkan kategori
+product_order_counts = product_order_counts_pivot(
+    pd.to_datetime(start_date), pd.to_datetime(end_date))
 
-    # Data penjualan terbaik berdasarkan kategori
-    best_selling_products = product_order_counts.reset_index().head(10)
+# Data penjualan terbaik berdasarkan kategori
+best_selling_products = product_order_counts.reset_index().head(10)
 
-    # Data penjualan terburuk berdasarkan kategori
-    worst_selling_products = product_order_counts.reset_index().tail(10)[::-1]
+# Data penjualan terburuk berdasarkan kategori
+worst_selling_products = product_order_counts.reset_index().tail(10)[::-1]
 
-    # Data penjualan berdasarkan wilayah (kota)
-    city_sales_df = order_items_by_city_pivot(
-        pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index().head(10)
+# Data penjualan berdasarkan wilayah (kota)
+city_sales_df = order_items_by_city_pivot(
+    pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index().head(10)
 
-    # Data penjualan berdasarkan wilayah (state)
-    state_sales_df = order_items_by_state_pivot(
-        pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index().head(10)
+# Data penjualan berdasarkan wilayah (state)
+state_sales_df = order_items_by_state_pivot(
+    pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index().head(10)
 
-    # Data metode pembayaran
-    payment_methods_df = payment_type_counts_pivot(
-        pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
+# Data metode pembayaran
+payment_methods_df = payment_type_counts_pivot(
+    pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
 
-    # Data metode pembayaran berdasarkan cicilan credit card
-    payment_installment_credit_card_plot = payment_installment_counts_pivot(
-            pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
+# Data metode pembayaran berdasarkan cicilan credit card
+payment_installment_credit_card_plot = payment_installment_counts_pivot(
+    pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
 
-    # Visualisasi semua data
-    show_best_selling_products(best_selling_products)
-    show_worst_selling_products(worst_selling_products)
-    show_city_sales(city_sales_df)
-    show_state_sales(state_sales_df)
-    show_payment_methods(payment_methods_df)
-    show_payment_installment_methods(payment_installment_credit_card_plot)
+# Visualisasi semua data
+show_best_selling_products(best_selling_products)
+show_worst_selling_products(worst_selling_products)
+show_city_sales(city_sales_df)
+show_state_sales(state_sales_df)
+show_payment_methods(payment_methods_df)
+show_payment_installment_methods(payment_installment_credit_card_plot)
