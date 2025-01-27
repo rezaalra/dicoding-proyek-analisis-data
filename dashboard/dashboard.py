@@ -89,25 +89,25 @@ def product_order_counts_pivot(start_date, end_date):
     product_order_counts.rename("order_count", inplace=True)
     return product_order_counts
 
-def order_items_by_city_pivot():
+def order_items_by_city_pivot(start_date, end_date):
     order_items_by_city = customer_order_items_df.groupby(
         by="customer_city").order_item_id.count().sort_values(ascending=False)
     order_items_by_city.rename("order_count", inplace=True)
     return order_items_by_city
 
-def order_items_by_state_pivot():
+def order_items_by_state_pivot(start_date, end_date):
     order_items_by_state = customer_order_items_df.groupby(
         by="customer_state").order_item_id.count().sort_values(ascending=False)
     order_items_by_state.rename("order_count", inplace=True)
     return order_items_by_state
 
-def payment_type_counts_pivot():
+def payment_type_counts_pivot(start_date, end_date):
     payment_type_counts = order_payments_df.groupby(
         by="payment_type").order_id.count().sort_values(ascending=False)
     payment_type_counts.rename("order_count", inplace=True)
     return payment_type_counts
 
-def payment_installment_counts_pivot():
+def payment_installment_counts_pivot(start_date, end_date):
     payment_installment_counts = order_payments_df.groupby(
         ["payment_type", 'payment_installments']).order_id.count()
     payment_installment_counts.rename("order_count", inplace=True)
@@ -228,7 +228,7 @@ end_date = st.date_input(
 
 if st.button("Apply"):
     # Data penjualan berdasarkan kategori
-    product_order_counts = product_order_counts_pivot()
+    product_order_counts = product_order_counts_pivot(start_date, end_date)
 
     # Data penjualan terbaik berdasarkan kategori
     best_selling_products = product_order_counts.reset_index().head(10)
@@ -237,17 +237,17 @@ if st.button("Apply"):
     worst_selling_products = product_order_counts.reset_index().tail(10)[::-1]
 
     # Data penjualan berdasarkan wilayah (kota)
-    city_sales_df = order_items_by_city_pivot().reset_index().head(10)
+    city_sales_df = order_items_by_city_pivot(start_date, end_date).reset_index().head(10)
 
     # Data penjualan berdasarkan wilayah (state)
-    state_sales_df = order_items_by_state_pivot().reset_index().head(10)
+    state_sales_df = order_items_by_state_pivot(start_date, end_date).reset_index().head(10)
 
     # Data metode pembayaran
-    payment_methods_df = payment_type_counts_pivot().reset_index()
+    payment_methods_df = payment_type_counts_pivot(start_date, end_date).reset_index()
 
     # Data metode pembayaran berdasarkan cicilan credit card
     payment_installment_credit_card_plot = \
-        payment_installment_counts_pivot()['credit_card'].reset_index()
+        payment_installment_counts_pivot(start_date, end_date)['credit_card'].reset_index()
 
     # Visualisasi semua data
     show_best_selling_products(best_selling_products)
