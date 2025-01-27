@@ -64,72 +64,67 @@ order_payments_df['payment_installments'] = \
   order_payments_df['payment_installments'].replace(0, 1)
 
 # Join semua data yang perlukan
-order_products_df = pd.merge(orders_df,
-                             order_items_df,
-                             left_on='order_id',
-                             right_on='order_id',
-                             how='inner')
-order_products_df = pd.merge(order_products_df,
-                             products_df,
-                             left_on='product_id',
-                             right_on='product_id',
-                             how='inner')
-customer_order_items_df = pd.merge(customers_df,
-                                   orders_df,
-                                   left_on='customer_id',
-                                   right_on='customer_id',
-                                   how='inner')
-customer_order_items_df = pd.merge(customer_order_items_df,
-                                   order_items_df,
-                                   left_on='order_id',
-                                   right_on='order_id',
-                                   how='inner')
-order_payment_dates_df = pd.merge(orders_df,
-                                  order_payments_df,
-                                  left_on='order_id',
-                                  right_on='order_id',
-                                  how='inner')
+all_data_df = pd.merge(customers_df,
+                       orders_df,
+                       left_on='customer_id',
+                       right_on='customer_id',
+                       how='left')
+all_data_df = pd.merge(all_data_df,
+                       order_items_df,
+                       left_on='order_id',
+                       right_on='order_id',
+                       how='left')
+all_data_df = pd.merge(all_data_df,
+                       order_payments_df,
+                       left_on='order_id',
+                       right_on='order_id',
+                       how='left')
+all_data_df = pd.merge(all_data_df,
+                       products_df,
+                       left_on='product_id',
+                       right_on='product_id',
+                       how='left')
 
 def product_order_counts_pivot(start_date, end_date):
-    product_order_counts = order_products_df[
-        (order_products_df.order_purchase_timestamp >= start_date) &
-        (order_products_df.order_purchase_timestamp <= end_date)]
+    product_order_counts = all_data_df[
+        (all_data_df.order_purchase_timestamp >= start_date) &
+        (all_data_df.order_purchase_timestamp <= end_date)]
     product_order_counts = product_order_counts.groupby(
         by="product_category_name").order_id.count().sort_values(ascending=False)
     product_order_counts.rename("order_count", inplace=True)
     return product_order_counts
 
 def order_items_by_city_pivot(start_date, end_date):
-    order_items_by_city = customer_order_items_df[
-        (customer_order_items_df.order_purchase_timestamp >= start_date) &
-        (customer_order_items_df.order_purchase_timestamp <= end_date)]
+    order_items_by_city = all_data_df[
+        (all_data_df.order_purchase_timestamp >= start_date) &
+        (all_data_df.order_purchase_timestamp <= end_date)]
     order_items_by_city = order_items_by_city.groupby(
         by="customer_city").order_item_id.count().sort_values(ascending=False)
     order_items_by_city.rename("order_count", inplace=True)
     return order_items_by_city
 
 def order_items_by_state_pivot(start_date, end_date):
-    order_items_by_state = customer_order_items_df[
-        (customer_order_items_df.order_purchase_timestamp >= start_date) &
-        (customer_order_items_df.order_purchase_timestamp <= end_date)]
+    order_items_by_state = all_data_df[
+        (all_data_df.order_purchase_timestamp >= start_date) &
+        (all_data_df.order_purchase_timestamp <= end_date)]
     order_items_by_state = order_items_by_state.groupby(
         by="customer_state").order_item_id.count().sort_values(ascending=False)
     order_items_by_state.rename("order_count", inplace=True)
     return order_items_by_state
 
 def payment_type_counts_pivot(start_date, end_date):
-    payment_type_counts = order_payment_dates_df[
-        (order_payment_dates_df.order_purchase_timestamp >= start_date) &
-        (order_payment_dates_df.order_purchase_timestamp <= end_date)]
+    payment_type_counts = all_data_df[
+        (all_data_df.order_purchase_timestamp >= start_date) &
+        (all_data_df.order_purchase_timestamp <= end_date)]
     payment_type_counts = payment_type_counts.groupby(
         by="payment_type").order_id.count().sort_values(ascending=False)
     payment_type_counts.rename("order_count", inplace=True)
     return payment_type_counts
 
 def payment_installment_counts_pivot(start_date, end_date):
-    payment_installment_counts = order_payment_dates_df[
-        (order_payment_dates_df.order_purchase_timestamp >= start_date) &
-        (order_payment_dates_df.order_purchase_timestamp <= end_date)]
+    payment_installment_counts = all_data_df[
+        (all_data_df.order_purchase_timestamp >= start_date) &
+        (all_data_df.order_purchase_timestamp <= end_date)]
     payment_installment_counts = payment_installment_counts[
         payment_installment_counts.payment_type == 'credit_card']
     payment_installment_counts = payment_installment_counts.groupby(
