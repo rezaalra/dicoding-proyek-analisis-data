@@ -282,4 +282,4 @@ if st.button("Apply"):
     show_city_sales(city_sales_df)
     show_state_sales(state_sales_df)
     show_payment_methods(payment_methods_df)
-    show_payment_installment_methods(payment_installment_credit_card_plot)
+    #show_payment_installment_methods(payment_installment_credit_card_plot)
