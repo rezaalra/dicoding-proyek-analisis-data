@@ -59,19 +59,12 @@ integer_columns = ['product_name_lenght',
 products_df = products_df.astype(
     {column:'int' for column in integer_columns})
 
-# Exploratory Data Analysis (EDA)
-# Explore kategori produk berdasarkan jumlah penjualan yang telah terjadi
+# Join semua data yang perlukan
 order_products_df = pd.merge(order_items_df,
                              products_df,
                              left_on='product_id',
                              right_on='product_id',
                              how='inner')
-product_order_counts = order_products_df.groupby(
-    by="product_category_name").order_id.count()
-product_order_counts.rename("order_count", inplace=True)
-product_order_counts = product_order_counts.sort_values(ascending=False)
-
-# Explore jumlah penjualan yang telah terjadi berdasarkan wilayahnya
 customer_order_items_df = pd.merge(customers_df,
                                    orders_df,
                                    left_on='customer_id',
@@ -83,6 +76,43 @@ customer_order_items_df = pd.merge(customer_order_items_df,
                                    right_on='order_id',
                                    how='inner')
 
+# Header
+st.set_page_config(
+    page_title="Dashboard E-commerce by Reza",
+    page_icon=":bar_chart",
+    layout="wide")
+st.title(":bar_chart: Dashboard E-commerce by Reza")
+st.subheader("Nama: Muhamad Reza Al Ramadhan")
+st.subheader("Email: rezaalramadhan@gmail.com")
+st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
+
+# Date Filter
+earliest_date = orders_df.order_purchase_timestamp.min()
+last_date  = orders_df.order_purchase_timestamp.max()
+start_date = st.date_input(
+    label="Start Date", 
+    value=None,
+    min_value=earliest_date,
+    max_value=last_date)
+end_date = st.date_input(
+    label="End Date",
+    value=None,
+    min_value=earliest_date,
+    max_value=last_date)
+if st.button("Apply"):
+    show_best_selling_products()
+
+def show_best_selling_products():
+    st.write("Error")
+
+# Exploratory Data Analysis (EDA)
+# Explore kategori produk berdasarkan jumlah penjualan yang telah terjadi
+product_order_counts = order_products_df.groupby(
+    by="product_category_name").order_id.count()
+product_order_counts.rename("order_count", inplace=True)
+product_order_counts = product_order_counts.sort_values(ascending=False)
+
+# Explore jumlah penjualan yang telah terjadi berdasarkan wilayahnya
 order_items_by_city = customer_order_items_df.groupby(
     by="customer_city").order_item_id.count().sort_values(ascending=False)
 order_items_by_city.rename("order_count", inplace=True)
@@ -130,15 +160,6 @@ payment_methods_df = payment_type_counts.reset_index()
 # Data metode pembayaran berdasarkan cicilan credit card
 payment_installment_credit_card_plot = \
   payment_installment_counts['credit_card'].reset_index()
-
-st.set_page_config(
-    page_title="Dashboard E-commerce by Reza",
-    page_icon=":bar_chart",
-    layout="wide")
-st.title(":bar_chart: Dashboard E-commerce by Reza")
-st.subheader("Nama: Muhamad Reza Al Ramadhan")
-st.subheader("Email: rezaalramadhan@gmail.com")
-st.subheader("ID: https://www.dicoding.com/users/reza_al_ramadhan/")
 
 # Visualisasi Penjualan terbaik Berdasarkan Kategori Produk
 st.header("Best Selling Products")
