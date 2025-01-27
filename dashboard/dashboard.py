@@ -84,6 +84,11 @@ customer_order_items_df = pd.merge(customer_order_items_df,
                                    left_on='order_id',
                                    right_on='order_id',
                                    how='inner')
+order_payment_dates_df = pd.merge(orders_df,
+                                  order_payments_df,
+                                  left_on='order_id',
+                                  right_on='order_id',
+                                  how='inner')
 
 def product_order_counts_pivot(start_date, end_date):
     product_order_counts = order_products_df[
@@ -113,13 +118,19 @@ def order_items_by_state_pivot(start_date, end_date):
     return order_items_by_state
 
 def payment_type_counts_pivot(start_date, end_date):
-    payment_type_counts = order_payments_df.groupby(
+    payment_type_counts = order_payment_dates_df[
+        (order_payment_dates_df.order_purchase_timestamp >= start_date) &
+        (order_payment_dates_df.order_purchase_timestamp <= end_date)]
+    payment_type_counts = payment_type_counts.groupby(
         by="payment_type").order_id.count().sort_values(ascending=False)
     payment_type_counts.rename("order_count", inplace=True)
     return payment_type_counts
 
 def payment_installment_counts_pivot(start_date, end_date):
-    payment_installment_counts = order_payments_df.groupby(
+    payment_installment_counts = order_payment_dates_df[
+        (order_payment_dates_df.order_purchase_timestamp >= start_date) &
+        (order_payment_dates_df.order_purchase_timestamp <= end_date)]
+    payment_installment_counts = payment_installment_counts.groupby(
         ["payment_type", 'payment_installments']).order_id.count()
     payment_installment_counts.rename("order_count", inplace=True)
     return payment_installment_counts
