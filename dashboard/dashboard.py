@@ -130,8 +130,10 @@ def payment_installment_counts_pivot(start_date, end_date):
     payment_installment_counts = order_payment_dates_df[
         (order_payment_dates_df.order_purchase_timestamp >= start_date) &
         (order_payment_dates_df.order_purchase_timestamp <= end_date)]
+    payment_installment_counts = payment_installment_counts[
+        payment_installment_counts.payment_type == 'credit_card']
     payment_installment_counts = payment_installment_counts.groupby(
-        ["payment_type", 'payment_installments']).order_id.count()
+        by='payment_installments').order_id.count()
     payment_installment_counts.rename("order_count", inplace=True)
     return payment_installment_counts
 
@@ -139,7 +141,7 @@ def payment_installment_counts_pivot(start_date, end_date):
 def show_best_selling_products(best_selling_products):
     st.header("Best Selling Products")
     fig1, ax1 = plt.subplots(figsize=(8, 4))
-    colors = ["#00FF57"] + ["#D3D3D3"] * (len(best_selling_products) - 1)
+    colors = ["#00FF57"] + ["#D3D3D3"] * ( - 1)
     sns.barplot(
         data=best_selling_products,
         x="order_count",
@@ -216,6 +218,10 @@ def show_payment_methods(payment_methods_df):
 # Visualisasi Sebaran Metode Pembayaran
 def show_payment_installment_methods(payment_installment_credit_card_plot):
     st.header("Number of Customers by Number of Installments")
+    data_length = len(payment_installment_credit_card_plot)
+    if (data_length == 0):
+        st.write('Data visualization cannot be displayed because there are no matching data records.')
+        return None
     fig6, ax6 = plt.subplots(figsize=(8, 4))
     plt.plot(payment_installment_credit_card_plot["payment_installments"],
             payment_installment_credit_card_plot["order_count"])
@@ -273,8 +279,8 @@ if st.button("Apply"):
         pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
 
     # Data metode pembayaran berdasarkan cicilan credit card
-    #payment_installment_credit_card_plot = payment_installment_counts_pivot(
-            #pd.to_datetime(start_date), pd.to_datetime(end_date))['credit_card'].reset_index()
+    payment_installment_credit_card_plot = payment_installment_counts_pivot(
+            pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
 
     # Visualisasi semua data
     show_best_selling_products(best_selling_products)
@@ -282,4 +288,4 @@ if st.button("Apply"):
     show_city_sales(city_sales_df)
     show_state_sales(state_sales_df)
     show_payment_methods(payment_methods_df)
-    #show_payment_installment_methods(payment_installment_credit_card_plot)
+    show_payment_installment_methods(payment_installment_credit_card_plot)
