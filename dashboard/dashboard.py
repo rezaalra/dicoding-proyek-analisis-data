@@ -273,8 +273,8 @@ if st.button("Apply"):
         pd.to_datetime(start_date), pd.to_datetime(end_date)).reset_index()
 
     # Data metode pembayaran berdasarkan cicilan credit card
-    payment_installment_credit_card_plot = payment_installment_counts_pivot(
-            pd.to_datetime(start_date), pd.to_datetime(end_date))['credit_card'].reset_index()
+    #payment_installment_credit_card_plot = payment_installment_counts_pivot(
+            #pd.to_datetime(start_date), pd.to_datetime(end_date))['credit_card'].reset_index()
 
     # Visualisasi semua data
     show_best_selling_products(best_selling_products)
