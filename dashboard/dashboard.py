@@ -99,6 +99,7 @@ end_date = st.date_input(
     value=None,
     min_value=earliest_date,
     max_value=last_date)
+st.write(end_date)
 if st.button("Apply"):
     show_best_selling_products()
 
@@ -113,24 +114,17 @@ product_order_counts.rename("order_count", inplace=True)
 product_order_counts = product_order_counts.sort_values(ascending=False)
 
 # Explore jumlah penjualan yang telah terjadi berdasarkan wilayahnya
+# Explore jumlah penjualan yang telah terjadi berdasarkan kotanya
 order_items_by_city = customer_order_items_df.groupby(
     by="customer_city").order_item_id.count().sort_values(ascending=False)
 order_items_by_city.rename("order_count", inplace=True)
 
+# Explore jumlah penjualan yang telah terjadi berdasarkan statenya
 order_items_by_state = customer_order_items_df.groupby(
     by="customer_state").order_item_id.count().sort_values(ascending=False)
 order_items_by_state.rename("order_count", inplace=True)
 
 # Explore sebaran metode pembayaran yang digunakan dalam data transaksi customer
-payment_type_counts = order_payments_df.groupby(
-    by="payment_type").order_id.count()
-payment_type_counts.rename("order_count", inplace=True)
-payment_type_counts = payment_type_counts.sort_values(ascending=False)
-
-payment_installment_counts = order_payments_df.groupby(
-    ["payment_type", 'payment_installments']).order_id.count()
-payment_installment_counts.rename("order_count", inplace=True)
-
 order_payments_df['payment_installments'] = \
   order_payments_df['payment_installments'].replace(0, 1)
 
